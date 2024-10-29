@@ -9,11 +9,13 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.statics.findOneOrCreate = async function (profile) {
-  const user = await this.findOne({ $or: [
-    { googleId: profile.googleId },
-    { discordId: profile.discordId },
-    { facebookId: profile.facebookId }
-  ] });
+  const user = await this.findOne({
+    $or: [
+      { googleId: profile.googleId },
+      { discordId: profile.discordId },
+      { facebookId: profile.facebookId }
+    ]
+  });
 
   if (user) {
     return user; // Si ya existe, devuelve el usuario

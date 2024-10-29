@@ -14,11 +14,12 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        // Aquí debes implementar la lógica para encontrar o crear un usuario
-        let user = await User.findOne({ googleId: profile.id });
-        if (!user) {
-          user = await User.create({ googleId: profile.id, username: profile.displayName, email: profile.emails[0].value });
-        }
+        // Utiliza findOneOrCreate para encontrar o crear el usuario
+        const user = await User.findOneOrCreate({
+          googleId: profile.id,
+          email: profile.emails[0].value,
+          displayName: profile.displayName,
+        });
         return done(null, user);
       } catch (error) {
         return done(error, null);
@@ -38,10 +39,12 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        let user = await User.findOne({ discordId: profile.id });
-        if (!user) {
-          user = await User.create({ discordId: profile.id, username: profile.username, email: profile.email });
-        }
+        // Utiliza findOneOrCreate para encontrar o crear el usuario
+        const user = await User.findOneOrCreate({
+          discordId: profile.id,
+          email: profile.email,
+          displayName: profile.username,
+        });
         return done(null, user);
       } catch (error) {
         return done(error, null);
@@ -61,10 +64,12 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        let user = await User.findOne({ facebookId: profile.id });
-        if (!user) {
-          user = await User.create({ facebookId: profile.id, username: profile.displayName, email: profile.emails[0].value });
-        }
+        // Utiliza findOneOrCreate para encontrar o crear el usuario
+        const user = await User.findOneOrCreate({
+          facebookId: profile.id,
+          email: profile.emails[0].value,
+          displayName: profile.displayName,
+        });
         return done(null, user);
       } catch (error) {
         return done(error, null);
@@ -75,14 +80,14 @@ passport.use(
 
 // Serializar el usuario
 passport.serializeUser((user, done) => {
-  done(null, user.id); // Serializa el id del usuario
+  done(null, user.id);
 });
 
 // Deserializar el usuario
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id);
-    done(null, user); // Deserializa el usuario
+    done(null, user);
   } catch (error) {
     done(error, null);
   }
