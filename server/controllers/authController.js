@@ -80,7 +80,7 @@ passport.use(
 
 // Serializar el usuario
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, { id: user.id, displayName: user.displayName });
 });
 
 // Deserializar el usuario

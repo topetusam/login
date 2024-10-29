@@ -20,4 +20,10 @@ router.get("/facebook/callback", passport.authenticate("facebook", { failureRedi
   res.redirect("http://localhost:3000/home");
 });
 
+router.get("/user", (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.json({ displayName: req.user.displayName });
+  }
+  return res.status(401).json({ message: "No estás autenticado" });
+});
 module.exports = router;
