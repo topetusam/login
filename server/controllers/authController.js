@@ -10,7 +10,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://login-chi-pearl.vercel.app/auth/google/callback",
+      callbackURL: "/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -39,7 +39,7 @@ passport.use(
     {
       clientID: process.env.DISCORD_CLIENT_ID,
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
-      callbackURL: "https://login-chi-pearl.vercel.app/auth/discord/callback",
+      callbackURL: "/auth/discord/callback",
       scope: ["identify", "email"],
     },
     async (accessToken, refreshToken, profile, done) => {
@@ -53,7 +53,7 @@ passport.use(
             displayName: profile.username,
           });
         }
-        return done();
+        return done(null, user);
       } catch (error) {
         return done(error, null);
       }
@@ -67,7 +67,7 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: "https://login-chi-pearl.vercel.app/auth/facebook/callback",
+      callbackURL: "/auth/facebook/callback",
       profileFields: ["id", "displayName", "photos", "email"],
     },
     async (accessToken, refreshToken, profile, done) => {
