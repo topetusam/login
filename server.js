@@ -12,7 +12,7 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://ealexandergarcia.github.io/login",
     credentials: true,
   })
 );
@@ -21,7 +21,7 @@ app.use(
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
 }));
 
 // Inicializar Passport y usar sesiones

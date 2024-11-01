@@ -3,10 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
+    "start": "node server.js",
+    "build": "vite build",
     "dev:back": "node --env-file .env --watch server.js",
     "dev:front": "vite",
     "dev": "concurrently \"npm run dev:front\" \"npm run dev:back\"",
-    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
